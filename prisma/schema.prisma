@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  hashedPassword String?
+  role           String    @default("OPERATOR") // ADMIN, MANAGER, OPERATOR
+  image          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  accounts Account[]
+  sessions Session[]
+  alerts   Alert[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Supplier {
+  id        String   @id @default(cuid())
+  name      String
+  contact   String?
+  email     String?
+  phone     String?
+  address   String?
+  country   String?
+  certified Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  products Product[]
+  lots     Lot[]
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  sku         String   @unique
+  category    String?
+  description String?
+  unit        String   @default("kg")
+  supplierId  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  supplier Supplier? @relation(fields: [supplierId], references: [id])
+  lots     Lot[]
+}
+
+model Lot {
+  id              String   @id @default(cuid())
+  lotNumber       String   @unique
+  productId       String
+  supplierId      String?
+  quantity        Float
+  unit            String   @default("kg")
+  status          String   @default("RECEIVED") // RECEIVED, IN_PROCESS, DISPATCHED, RECALLED
+  origin          String?
+  receivedAt      DateTime @default(now())
+  expiresAt       DateTime?
+  temperature     Float?
+  notes           String?
+  qrCode          String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  product    Product     @relation(fields: [productId], references: [id])
+  supplier   Supplier?   @relation(fields: [supplierId], references: [id])
+  alerts     Alert[]
+  traceEvents TraceEvent[]
+}
+
+model TraceEvent {
+  id          String   @id @default(cuid())
+  lotId       String
+  eventType   String   // RECEIVED, INSPECTED, STORED, PROCESSED, SHIPPED, RECALLED
+  location    String?
+  description String?
+  temperature Float?
+  performedBy String?
+  createdAt   DateTime @default(now())
+
+  lot Lot @relation(fields: [lotId], references: [id], onDelete: Cascade)
+}
+
+model Alert {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  severity    String   @default("MEDIUM") // LOW, MEDIUM, HIGH, CRITICAL
+  status      String   @default("ACTIVE") // ACTIVE, ACKNOWLEDGED, RESOLVED
+  type        String   @default("QUALITY") // QUALITY, TEMPERATURE, EXPIRY, RECALL, CONTAMINATION
+  lotId       String?
+  createdById String?
+  resolvedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  lot       Lot?  @relation(fields: [lotId], references: [id])
+  createdBy User? @relation(fields: [createdById], references: [id])
+}
