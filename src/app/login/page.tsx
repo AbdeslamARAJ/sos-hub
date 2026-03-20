@@ -25,7 +25,7 @@ export default function LoginPage() {
     setLoading(false);
 
     if (result?.error) {
-      setError("Invalid email or password");
+      setError("Email ou mot de passe incorrect");
     } else {
       router.push("/dashboard");
       router.refresh();
@@ -33,23 +33,26 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted">
-      <div className="w-full max-w-md">
-        <div className="bg-card rounded-xl shadow-lg p-8 border border-border">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100">
+      <div className="w-full max-w-md px-4">
+        <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-8 border border-slate-100">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-foreground">SOS Hub</h1>
-            <p className="text-secondary mt-1">Food Traceability Platform</p>
+            <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/25">
+              <span className="text-white font-bold text-xl">SH</span>
+            </div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">SOS Hub</h1>
+            <p className="text-slate-500 mt-1 text-sm">Plateforme de traçabilité alimentaire</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-danger-light text-danger text-sm p-3 rounded-lg">
+              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl border border-red-100">
                 {error}
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Email
               </label>
               <input
@@ -57,21 +60,21 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-card"
+                className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-sm transition-all"
                 placeholder="admin@soshub.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
-                Password
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                Mot de passe
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-card"
+                className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-sm transition-all"
                 placeholder="••••••••"
               />
             </div>
@@ -79,16 +82,16 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors disabled:opacity-50 font-medium"
+              className="w-full bg-blue-600 text-white py-2.5 rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 font-medium text-sm shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40"
             >
-              {loading ? "Signing in..." : "Sign In"}
+              {loading ? "Connexion en cours..." : "Se connecter"}
             </button>
           </form>
 
-          <p className="text-center text-sm text-secondary mt-6">
-            Don&apos;t have an account?{" "}
-            <a href="/register" className="text-primary hover:underline">
-              Register
+          <p className="text-center text-sm text-slate-500 mt-6">
+            Pas encore de compte ?{" "}
+            <a href="/register" className="text-blue-600 hover:underline font-medium">
+              S'inscrire
             </a>
           </p>
         </div>

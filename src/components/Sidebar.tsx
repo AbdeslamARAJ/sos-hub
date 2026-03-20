@@ -17,10 +17,10 @@ import { useState } from "react";
 
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: FiHome },
-  { href: "/dashboard/suppliers", label: "Suppliers", icon: FiTruck },
-  { href: "/dashboard/products", label: "Products", icon: FiBox },
+  { href: "/dashboard/suppliers", label: "Fournisseurs", icon: FiTruck },
+  { href: "/dashboard/products", label: "Produits", icon: FiBox },
   { href: "/dashboard/lots", label: "Lots", icon: FiPackage },
-  { href: "/dashboard/alerts", label: "Alerts", icon: FiAlertTriangle },
+  { href: "/dashboard/alerts", label: "Alertes", icon: FiAlertTriangle },
 ];
 
 export default function Sidebar() {
@@ -31,45 +31,53 @@ export default function Sidebar() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-card border border-border rounded-lg shadow-sm"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white border border-slate-200 rounded-xl shadow-sm"
       >
         <FiMenu size={20} />
       </button>
 
       {open && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/40 z-40"
+          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
           onClick={() => setOpen(false)}
         />
       )}
 
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-card border-r border-border flex flex-col transition-transform lg:translate-x-0 ${
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-[260px] bg-sidebar-bg flex flex-col transition-transform lg:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between p-5 border-b border-border">
-          <Link href="/dashboard" className="text-xl font-bold text-primary">
-            SOS Hub
+        <div className="flex items-center justify-between px-6 py-5">
+          <Link href="/dashboard" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-sm">SH</span>
+            </div>
+            <span className="text-lg font-bold text-white tracking-tight">SOS Hub</span>
           </Link>
-          <button onClick={() => setOpen(false)} className="lg:hidden">
+          <button onClick={() => setOpen(false)} className="lg:hidden text-slate-400 hover:text-white">
             <FiX size={20} />
           </button>
         </div>
 
-        <nav className="flex-1 p-3 space-y-1">
+        <div className="px-4 mb-2">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500 px-3">Menu</p>
+        </div>
+
+        <nav className="flex-1 px-3 space-y-0.5">
           {navItems.map((item) => {
             const isActive =
-              pathname === item.href || pathname.startsWith(item.href + "/");
+              pathname === item.href ||
+              (item.href !== "/dashboard" && pathname.startsWith(item.href + "/"));
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all ${
                   isActive
-                    ? "bg-primary-light text-primary"
-                    : "text-secondary hover:bg-muted hover:text-foreground"
+                    ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25"
+                    : "text-slate-400 hover:text-white hover:bg-sidebar-hover"
                 }`}
               >
                 <item.icon size={18} />
@@ -79,13 +87,13 @@ export default function Sidebar() {
           })}
         </nav>
 
-        <div className="p-3 border-t border-border">
+        <div className="p-3 mt-auto border-t border-slate-700/50">
           <button
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-secondary hover:bg-muted hover:text-foreground w-full transition-colors"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium text-slate-400 hover:text-red-400 hover:bg-sidebar-hover w-full transition-all"
           >
             <FiLogOut size={18} />
-            Sign Out
+            Déconnexion
           </button>
         </div>
       </aside>

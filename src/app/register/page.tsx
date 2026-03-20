@@ -26,44 +26,47 @@ export default function RegisterPage() {
     setLoading(false);
 
     if (!res.ok) {
-      setError(data.error || "Registration failed");
+      setError(data.error || "L'inscription a échoué");
     } else {
       router.push("/login");
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted">
-      <div className="w-full max-w-md">
-        <div className="bg-card rounded-xl shadow-lg p-8 border border-border">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-blue-50 to-slate-100">
+      <div className="w-full max-w-md px-4">
+        <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-8 border border-slate-100">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-foreground">Create Account</h1>
-            <p className="text-secondary mt-1">Join SOS Hub</p>
+            <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/25">
+              <span className="text-white font-bold text-xl">SH</span>
+            </div>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Créer un compte</h1>
+            <p className="text-slate-500 mt-1 text-sm">Rejoignez SOS Hub</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {error && (
-              <div className="bg-danger-light text-danger text-sm p-3 rounded-lg">
+              <div className="bg-red-50 text-red-600 text-sm p-3 rounded-xl border border-red-100">
                 {error}
               </div>
             )}
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
-                Name
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                Nom
               </label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-card"
-                placeholder="John Doe"
+                className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-sm transition-all"
+                placeholder="Jean Dupont"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
                 Email
               </label>
               <input
@@ -71,14 +74,14 @@ export default function RegisterPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-card"
-                placeholder="you@example.com"
+                className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-sm transition-all"
+                placeholder="vous@exemple.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-foreground mb-1">
-                Password
+              <label className="block text-sm font-medium text-slate-700 mb-1.5">
+                Mot de passe
               </label>
               <input
                 type="password"
@@ -86,7 +89,7 @@ export default function RegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-3 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-card"
+                className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-sm transition-all"
                 placeholder="••••••••"
               />
             </div>
@@ -94,16 +97,16 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary text-white py-2 rounded-lg hover:bg-primary-hover transition-colors disabled:opacity-50 font-medium"
+              className="w-full bg-blue-600 text-white py-2.5 rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 font-medium text-sm shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40"
             >
-              {loading ? "Creating account..." : "Create Account"}
+              {loading ? "Création en cours..." : "Créer un compte"}
             </button>
           </form>
 
-          <p className="text-center text-sm text-secondary mt-6">
-            Already have an account?{" "}
-            <a href="/login" className="text-primary hover:underline">
-              Sign in
+          <p className="text-center text-sm text-slate-500 mt-6">
+            Vous avez déjà un compte ?{" "}
+            <a href="/login" className="text-blue-600 hover:underline font-medium">
+              Se connecter
             </a>
           </p>
         </div>

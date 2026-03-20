@@ -15,18 +15,18 @@ export default function AlertActions({ alertId }: { alertId: string }) {
   }
 
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-1.5">
       <button
         onClick={() => update("ACKNOWLEDGED")}
-        className="text-xs px-2 py-1 border border-border rounded hover:bg-muted transition-colors"
+        className="text-xs px-3 py-1.5 border border-slate-200 rounded-xl font-medium text-slate-600 hover:bg-slate-50 transition-all"
       >
-        Acknowledge
+        Acquitter
       </button>
       <button
         onClick={() => update("RESOLVED")}
-        className="text-xs px-2 py-1 bg-success text-white rounded hover:bg-green-700 transition-colors"
+        className="text-xs px-3 py-1.5 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-all shadow-sm"
       >
-        Resolve
+        Résoudre
       </button>
     </div>
   );
