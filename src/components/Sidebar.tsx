@@ -12,6 +12,7 @@ import {
   FiLogOut,
   FiMenu,
   FiX,
+  FiMaximize,
 } from "react-icons/fi";
 import { useState } from "react";
 
@@ -21,6 +22,7 @@ const navItems = [
   { href: "/dashboard/products", label: "Produits", icon: FiBox },
   { href: "/dashboard/lots", label: "Lots", icon: FiPackage },
   { href: "/dashboard/alerts", label: "Alertes", icon: FiAlertTriangle },
+  { href: "/dashboard/scanner", label: "Scanner QR", icon: FiMaximize },
 ];
 
 export default function Sidebar() {
